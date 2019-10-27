@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component, FC } from 'react';
 import './App.css';
+import firebase from './plugins/firebase';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          deploy
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Hello: FC = () => <div>Hello!</div>;
+const logProps = (WrappedComponent: FC) => {
+  return class extends Component {
+    componentDidMount() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          console.log("ログイン中")
+        } else {
+          console.log("ログアウト中")
+        }
+      });
+    }
+    render() {
+      return <WrappedComponent />;
+    }
+  };
+};
 
-export default App;
+export default logProps(Hello);
