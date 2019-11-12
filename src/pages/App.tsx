@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import firebase from './plugins/firebase';
+import firebase from '../plugins/firebase';
 interface Outh {
   email: string; password: string
 }
