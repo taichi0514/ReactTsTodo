@@ -20,3 +20,11 @@
 .App-link {
   color: #09d3ac;
 }
+
+.App-Login-Container{
+  display: flex;
+  flex-direction: column;
+  max-width: 240px;
+  width: 100%;
+  margin: 40px auto 0;
+}

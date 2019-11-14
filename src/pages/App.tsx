@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import firebase from '../plugins/firebase';
 interface Outh {
   email: string; password: string
@@ -13,6 +13,7 @@ class hoge extends Component<{}, Outh> {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log("ログイン中")
+        alert("ログイン完了")
       } else {
         console.log("ログアウト中")
       }
@@ -22,11 +23,14 @@ class hoge extends Component<{}, Outh> {
     console.log("login")
     const { email, password } = this.state;
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-      // Handle Errors here.
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      // ...
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorCode + ":" + errorMessage)
     });
+  }
+
+  signOut = () => {
+    firebase.auth().signOut();
   }
 
   emailSet(event: any) {
@@ -40,12 +44,12 @@ class hoge extends Component<{}, Outh> {
   render() {
     const { email, password } = this.state;
     return (
-      <>
+      <div className="App-Login-Container">
         <input id="email" type="email" placeholder="メールアドレスを入力" value={email} onChange={(event) => this.emailSet(event)} />
         <input id="password" type="password" placeholder="パスワードを入力" value={password} onChange={(event) => this.passwordSet(event)} />
-        <button type="button" onClick={this.Login}>Login</button><button type="button">Logout</button>
+        <button type="button" onClick={this.Login}>Login</button><button type="button" onClick={this.signOut}>Logout</button>
         {email}
-      </>
+      </div>
     );
   }
 };
