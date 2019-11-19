@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import './App.scss';
 import firebase from '../plugins/firebase';
+import Cookies from 'js-cookie';
+import Router from './router'
+import {
+  Redirect,
+} from "react-router-dom";
+
+
 interface Outh {
   email: string; password: string
 }
@@ -13,14 +20,14 @@ class hoge extends Component<{}, Outh> {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log("ログイン中")
-        alert("ログイン完了")
+        Cookies.set('isLoggin', 'ture')
       } else {
         console.log("ログアウト中")
+        Cookies.set('isLoggin', 'false')
       }
     });
   }
   Login = () => {
-    console.log("login")
     const { email, password } = this.state;
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
       const errorCode = error.code;
@@ -48,7 +55,6 @@ class hoge extends Component<{}, Outh> {
         <input id="email" type="email" placeholder="メールアドレスを入力" value={email} onChange={(event) => this.emailSet(event)} />
         <input id="password" type="password" placeholder="パスワードを入力" value={password} onChange={(event) => this.passwordSet(event)} />
         <button type="button" onClick={this.Login}>Login</button><button type="button" onClick={this.signOut}>Logout</button>
-        {email}
       </div>
     );
   }
