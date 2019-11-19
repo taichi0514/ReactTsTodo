@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import './App.scss';
 import firebase from '../plugins/firebase';
 import Cookies from 'js-cookie';
-import {
-    Redirect,
-} from "react-router-dom";
-
 
 
 interface Outh {
@@ -50,13 +46,6 @@ class auth extends Component<{}, Outh> {
 
     render() {
         const { email, password } = this.state;
-        const isLoggin = Cookies.get('isLoggin')
-        const Loggin: Boolean = new Boolean([isLoggin])
-
-        console.log("isLoggin:::" + Loggin)
-        if (Loggin === true) {
-            return <Redirect to="/todo" />;
-        }
         return (
             <div className="App-Login-Container">
                 <input id="email" type="email" placeholder="メールアドレスを入力" value={email} onChange={(event) => this.emailSet(event)} />
