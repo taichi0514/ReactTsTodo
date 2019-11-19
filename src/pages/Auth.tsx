@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.scss';
+import { useHistory } from 'react-router-dom'
+
 import firebase from '../plugins/firebase';
 import Cookies from 'js-cookie';
 
@@ -16,7 +18,7 @@ class auth extends Component<{}, Outh> {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 console.log("ログイン中")
-                Cookies.set('isLoggin', 'ture')
+                Cookies.set('isLoggin', 'true')
             } else {
                 console.log("ログアウト中")
                 Cookies.set('isLoggin', 'false')
@@ -30,6 +32,8 @@ class auth extends Component<{}, Outh> {
             const errorMessage = error.message;
             alert(errorCode + ":" + errorMessage)
         });
+        const history = useHistory();
+        console.log(Object.keys(history));
     }
 
     signOut = () => {

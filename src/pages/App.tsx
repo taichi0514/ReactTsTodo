@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import PrivateRoute from "../model/PrivateRoute"
 import Todo from "./Todo"
 import Auth from "./Auth"
 import Cookies from 'js-cookie';
@@ -9,16 +10,15 @@ class Router extends Component<{}> {
     super(props);
   }
   render() {
-    const isLoggin = Cookies.get('isLoggin')
-    const Loggin: Boolean = new Boolean([isLoggin])
-    console.log("isLoggin:::" + Loggin)
+    const Loggin = Cookies.get('isLoggin')
     return (
       <BrowserRouter>
         <div>
-          <Route exact path='/' component={Auth}>
-            {Loggin ? <Redirect to="/todo" /> : <Auth />}
-          </Route>
-          <Route path='/todo' component={Todo} />
+          <Switch>
+            <PrivateRoute />
+            <Route path="/" exact children={<Auth />} />
+            <Route path="/todo" exact children={<Todo />} />
+          </Switch>
         </div>
       </BrowserRouter>
     )
