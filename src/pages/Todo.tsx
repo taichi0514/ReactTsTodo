@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
 import './App.scss';
-import { Route, Redirect, useHistory, useLocation } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import Auth from "./Auth"
 import Cookies from 'js-cookie';
 import firebase from '../plugins/firebase';
 
-class Todo extends Component<{}> {
-    constructor(props: {}) {
-        super(props);
-    }
-
+class Todo extends Component<RouteComponentProps> {
     signOut = () => {
         firebase.auth().signOut();
         Cookies.set('isLoggin', 'false')
-        const location = useLocation();
-        const history = useHistory();
-        console.log(Object.keys(location)); // ["pathname", "search", "hash", "state"]
-        console.log(Object.keys(history));
+        this.props.history.push("/hoge");
     }
 
     render() {
@@ -29,4 +22,4 @@ class Todo extends Component<{}> {
     }
 };
 
-export default Todo;
+export default withRouter(Todo);

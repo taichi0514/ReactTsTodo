@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.scss';
-import { useHistory } from 'react-router-dom'
-
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import firebase from '../plugins/firebase';
 import Cookies from 'js-cookie';
 
@@ -9,11 +8,12 @@ import Cookies from 'js-cookie';
 interface Outh {
     email: string; password: string
 }
-class auth extends Component<{}, Outh> {
-    constructor(props: {}) {
-        super(props);
-        this.state = { email: "", password: "" }
-    }
+
+type authaa = {} & RouteComponentProps<{ code: string }>
+
+class auth extends Component<authaa> {
+
+    state = { email: "", password: "" }
     componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
@@ -32,8 +32,7 @@ class auth extends Component<{}, Outh> {
             const errorMessage = error.message;
             alert(errorCode + ":" + errorMessage)
         });
-        const history = useHistory();
-        console.log(Object.keys(history));
+        this.props.history.push("/todo");
     }
 
     signOut = () => {
@@ -60,4 +59,4 @@ class auth extends Component<{}, Outh> {
     }
 };
 
-export default auth;
+export default withRouter(auth);
