@@ -16,7 +16,7 @@ class Router extends Component<{}> {
       <BrowserRouter>
         <div>
           <Switch>
-            <PrivateRoute />
+            {/* <PrivateRoute /> */}
             <Route path="/" exact children={<Auth />} />
             <Route path="/todo" exact children={<Todo />} />
             <Route path="/hoge" exact children={<Hoge />} />

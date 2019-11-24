@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import './App.scss';
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import Auth from "./Auth"
 import Cookies from 'js-cookie';
 import firebase from '../plugins/firebase';
 
-class Todo extends Component<RouteComponentProps> {
-    signOut = () => {
+const Todo: React.FC<{}> = () => {
+    const history = useHistory();
+
+    const signOut = () => {
         firebase.auth().signOut();
         Cookies.set('isLoggin', 'false')
-        this.props.history.push("/hoge");
+        history.push("/")
     }
+    return (
+        <div>
+            <p>ログインできています</p>
+            <button type="button" onClick={signOut}>signOut</button>
+        </div>
+    );
 
-    render() {
-        return (
-            <div>
-                <p>ログインできています</p>
-                <button type="button" onClick={this.signOut}>signOut</button>
-            </div>
-        );
-    }
 };
 
-export default withRouter(Todo);
+export default Todo
