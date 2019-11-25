@@ -24,7 +24,7 @@ const Todo: React.FC<{}> = () => {
         history.push("/")
     }
     return (
-        <div>
+        <div className="App-Login-Container">
             <p>ログインできています</p>
             <button type="button" onClick={signOut}>signOut</button>
         </div>
