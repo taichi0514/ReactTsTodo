@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import firebase from '../plugins/firebase';
 
 const Todo: React.FC<{}> = () => {
+    const db = firebase.firestore();
     const history = useHistory();
     React.useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
@@ -16,6 +17,12 @@ const Todo: React.FC<{}> = () => {
                 history.push("/")
             }
         });
+
+        db.collection("users").add({
+            first: "Ada",
+            last: "Lovelace",
+            born: 1815
+        })
     }, []);
 
     const signOut = () => {
