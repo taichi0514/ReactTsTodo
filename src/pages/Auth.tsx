@@ -16,11 +16,9 @@ const Auth: React.FC<{}> = () => {
 
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log("ログイン中");
                 Cookies.set("isLoggin", "true");
                 history.push("/todo")
             } else {
-                console.log("ログアウト中");
                 Cookies.set("isLoggin", "false");
                 history.push("/")
             }
