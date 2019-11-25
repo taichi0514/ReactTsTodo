@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import Home from "./App"
 import Todo from "./Todo"
 import Auth from "./Auth"
+import PrivateRoute from "../model/PrivateRoute"
 import Cookies from 'js-cookie';
 
 class Router extends Component<{}> {
@@ -16,11 +17,8 @@ class Router extends Component<{}> {
         return (
             <BrowserRouter>
                 <div>
-                    <Route exact path='/' component={Home}>
-                        {Loggin ? <Redirect to="/todo" /> : <Home />}
-                    </Route>
                     <Route path='/todo' component={Todo} />
-                    <Route path='/Auth' component={Auth} />
+                    <Route path='/auth' component={Auth} />
                 </div>
             </BrowserRouter>
         )

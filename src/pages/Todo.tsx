@@ -11,7 +11,7 @@ const Todo: React.FC<{}> = () => {
     const signOut = () => {
         firebase.auth().signOut();
         Cookies.set('isLoggin', 'false')
-        history.push("/")
+        history.push("/auth")
     }
     return (
         <div>

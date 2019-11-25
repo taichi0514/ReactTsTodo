@@ -29,9 +29,11 @@ class PrivateRoute extends Component<RouteProps, Outh>{
 
   render() {
     if (this.state.isAuthenticated === "true") {
+      console.log(this.state.isAuthenticated)
       return (<Route to="/todo" component={Todo} />);
     }
     if (this.state.isAuthenticated === "false") {
+      console.log(this.state.isAuthenticated)
       return (<Route to="/auth" component={Auth} />);
     }
   }
