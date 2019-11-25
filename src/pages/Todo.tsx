@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.scss';
 import { useHistory } from "react-router-dom";
-import Auth from "./Auth"
 import Cookies from 'js-cookie';
 import firebase from '../plugins/firebase';
 
