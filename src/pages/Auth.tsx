@@ -3,7 +3,6 @@ import "./App.scss";
 import { useHistory } from "react-router-dom";
 import firebase from "../plugins/firebase";
 import Cookies from "js-cookie";
-import { thisExpression } from "@babel/types";
 
 const Auth: React.FC<{}> = () => {
     const isLoggin = Cookies.get('isLoggin')
@@ -19,11 +18,11 @@ const Auth: React.FC<{}> = () => {
             if (user) {
                 console.log("ログイン中");
                 Cookies.set("isLoggin", "true");
-                history.push("/todo")
+                // history.push("/todo")
             } else {
                 console.log("ログアウト中");
                 Cookies.set("isLoggin", "false");
-                history.push("/")
+                // history.push("/")
             }
         });
     }, []);
