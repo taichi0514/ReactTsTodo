@@ -18,11 +18,11 @@ const Auth: React.FC<{}> = () => {
             if (user) {
                 console.log("ログイン中");
                 Cookies.set("isLoggin", "true");
-                // history.push("/todo")
+                history.push("/todo")
             } else {
                 console.log("ログアウト中");
                 Cookies.set("isLoggin", "false");
-                // history.push("/")
+                history.push("/")
             }
         });
     }, []);
