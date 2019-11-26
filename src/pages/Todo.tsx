@@ -22,7 +22,7 @@ const Todo: React.FC<{}> = (props) => {
                 history.push("/")
             }
         });
-    });
+    }, []);
 
     const userCollection = (async () => {
 
@@ -67,11 +67,11 @@ const Todo: React.FC<{}> = (props) => {
             <button type="button" onClick={userCollection}>userCollection</button>
             {todos}
             <div>
-                <ul>
+                {/* <ul>
                     {todos.map((todos: any, i: number) => {
                         return <li key={i}>{todos}</li>
                     })}
-                </ul>
+                </ul> */}
             </div>
         </div>
     );
