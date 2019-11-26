@@ -8,8 +8,8 @@ import moment from "moment";
 const Todo: React.FC<{}> = (props) => {
     const db = firebase.firestore();
     const history = useHistory();
-    const [hoge, sethoge] = React.useState({ data: {} });
-    const [todo, setTodo] = React.useState();
+    const [hoge, sethoge] = React.useState();
+    const [todos, setTodo] = React.useState();
     const [uid, setUid] = React.useState();
     React.useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
@@ -22,36 +22,29 @@ const Todo: React.FC<{}> = (props) => {
                 history.push("/")
             }
         });
-    }, []);
+    });
 
-    const userCollection = (() => {
-        const citiesRef = db.collection("users");
-        citiesRef.doc(uid).collection("todo").get()
-            .then((snapshot) => {
-                snapshot.forEach((doc) => {
-                    sethoge({
-                        data: doc.data().name
-                    });
-                    console.log(JSON.stringify(doc.data().name))
-                    setTodo(JSON.stringify(doc.data().name))
-                });
-            })
+    const userCollection = (async () => {
+
+        const citiesRef = db.collection("users").doc(uid).collection("todo");
+        let result = await citiesRef.get()
             .then(() => {
-
+                citiesRef.onSnapshot(query => {
+                    let data: Array<any> = []
+                    query.forEach(d => data.push({ ...d.data(), docId: d.id }))
+                    setTodo(JSON.stringify(data))
+                })
             })
             .catch((err) => {
                 console.log('Error getting documents', err);
             });
-        return hoge;
     })
 
     const dataW = () => {
         // Add a new document in collection "cities"
-        const dateNow = moment().format('YYYY/HH');
+        const dateNow = moment().format('YYYY/HH/ss');
         db.collection("users").doc(uid).collection("todo").add({
-            name: "ddd",
-            state: "false",
-            time: dateNow
+            value: dateNow
         })
             .then(function () {
                 console.log("Document written with ID: ");
@@ -72,17 +65,14 @@ const Todo: React.FC<{}> = (props) => {
             <button type="button" onClick={signOut}>signOut</button>
             <button type="button" onClick={dataW}>hoge</button>
             <button type="button" onClick={userCollection}>userCollection</button>
-            {JSON.stringify(hoge.data)}
-            {todo}
-            {/* {hoge} */}
-            {/* {.map(hoges => <div>{hoges}</div>)} */}
-            {/* <ul>
-                {todo.map((val: any) =>
-                    <li>
-                        <a>{val}</a>
-                    </li>
-                )}
-            </ul> */}
+            {todos}
+            <div>
+                <ul>
+                    {todos.map((todos: any, i: number) => {
+                        return <li key={i}>{todos}</li>
+                    })}
+                </ul>
+            </div>
         </div>
     );
 
