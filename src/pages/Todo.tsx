@@ -8,7 +8,7 @@ import moment from "moment";
 const Todo: React.FC<{}> = (props) => {
     const db = firebase.firestore();
     const history = useHistory();
-    const [hoge, sethoge] = React.useState();
+    const [writingTodo, setWritingTodo] = React.useState();
     const [todos, setTodo] = React.useState([]);
     const [uid, setUid] = React.useState();
     React.useEffect(() => {
@@ -61,7 +61,7 @@ const Todo: React.FC<{}> = (props) => {
         const dateNow = moment().format('YYYY/HH/ss');
         const uidValue = Cookies.get("uid");
         db.collection("users").doc(uidValue).collection("todo").add({
-            value: dateNow
+            value: writingTodo
         })
             .then(function () {
                 console.log("Document written with ID: ");
@@ -77,13 +77,18 @@ const Todo: React.FC<{}> = (props) => {
         history.push("/")
     }
 
+    const setNewTodo = (event: any) => {
+        setWritingTodo(event.target.value);
+    }
+
 
 
     return (
         <div className="App-Login-Container">
             <p>ログインできています</p>
             <button type="button" onClick={signOut}>signOut</button>
-            <button type="button" onClick={dataWriting}>writing</button>
+            <input type="text" placeholder="post" value={writingTodo} onChange={setNewTodo} />
+            <button type="button" onClick={dataWriting}>post</button>
             <ul>{todos.map((keyName: any, i: number) => (
                 <li className="travelcompany-input" key={i}>
                     <span className="input-label">key: {i} Value: {keyName.value}</span>
