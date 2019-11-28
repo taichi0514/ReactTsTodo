@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 import firebase from '../plugins/firebase';
 import moment from "moment";
-import { type } from 'os';
 
 const Todo: React.FC<{}> = (props) => {
     const db = firebase.firestore();
@@ -13,23 +12,23 @@ const Todo: React.FC<{}> = (props) => {
     const [todos, setTodo] = React.useState([]);
     const [uid, setUid] = React.useState();
     React.useEffect(() => {
-        firebase.auth().onAuthStateChanged(user => {
+        firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
+                await setUid(user.uid)
                 Cookies.set("isLoggin", "true");
+                Cookies.set("uid", user.uid);
                 history.push("/todo")
-                setUid(user.uid)
             } else {
                 Cookies.set("isLoggin", "false");
                 history.push("/")
             }
+            await userCollection();
         })
-        if (uid) {
-            userCollection();
-        }
     }, []);
 
     const userCollection = (async () => {
-        const citiesRef = db.collection("users").doc(uid).collection("todo");
+        const uidValue = Cookies.get("uid");
+        const citiesRef = db.collection("users").doc(uidValue).collection("todo");
         let result = await citiesRef.get()
             .then(() => {
                 citiesRef.onSnapshot(query => {
@@ -54,12 +53,14 @@ const Todo: React.FC<{}> = (props) => {
             .catch((err) => {
                 console.log('Error getting documents', err);
             });
+        return result
     })
 
     const dataW = () => {
         // Add a new document in collection "cities"
         const dateNow = moment().format('YYYY/HH/ss');
-        db.collection("users").doc(uid).collection("todo").add({
+        const uidValue = Cookies.get("uid");
+        db.collection("users").doc(uidValue).collection("todo").add({
             value: dateNow
         })
             .then(function () {
@@ -82,8 +83,7 @@ const Todo: React.FC<{}> = (props) => {
         <div className="App-Login-Container">
             <p>ログインできています</p>
             <button type="button" onClick={signOut}>signOut</button>
-            <button type="button" onClick={dataW}>hoge</button>
-            <button type="button" onClick={userCollection}>userCollection</button>
+            <button type="button" onClick={dataW}>書き込み</button>
             <ul>{todos.map((keyName: any, i: number) => (
                 <li className="travelcompany-input" key={i}>
                     <span className="input-label">key: {i} Value: {keyName.value}</span>
