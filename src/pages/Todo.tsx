@@ -31,7 +31,7 @@ const Todo: React.FC<{}> = (props) => {
         const citiesRef = db.collection("users").doc(uidValue).collection("todo");
         let result = await citiesRef.get()
             .then(() => {
-                citiesRef.onSnapshot(query => {
+                citiesRef.orderBy("date", "desc").onSnapshot(query => {
                     let data = [{}]
                     query.forEach(d => data.push({ ...d.data(), docId: d.id }))
                     // const product: Product = JSON.parse(data) as Product;
@@ -58,10 +58,12 @@ const Todo: React.FC<{}> = (props) => {
 
     const dataWriting = () => {
         // Add a new document in collection "cities"
-        const dateNow = moment().format('YYYY/HH/ss');
+        const dateNow = moment().format('YYYY/HH/DD HH:MM:SS')
         const uidValue = Cookies.get("uid");
         db.collection("users").doc(uidValue).collection("todo").add({
-            value: writingTodo
+            value: writingTodo,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            date: dateNow
         })
             .then(function () {
                 console.log("Document written with ID: ");
