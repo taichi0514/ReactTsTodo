@@ -93,7 +93,7 @@ const Todo: React.FC<{}> = (props) => {
             <button type="button" onClick={dataWriting}>post</button>
             <ul>{todos.map((keyName: any, i: number) => (
                 <li className="travelcompany-input" key={i}>
-                    <span className="input-label">key: {i} Value: {keyName.value}</span>
+                    <span className="input-label">Time: {keyName.date} Value: {keyName.value}</span>
                 </li>
             ))}</ul>
         </div>
