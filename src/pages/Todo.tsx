@@ -56,7 +56,7 @@ const Todo: React.FC<{}> = (props) => {
         return result
     })
 
-    const dataW = () => {
+    const dataWriting = () => {
         // Add a new document in collection "cities"
         const dateNow = moment().format('YYYY/HH/ss');
         const uidValue = Cookies.get("uid");
@@ -83,7 +83,7 @@ const Todo: React.FC<{}> = (props) => {
         <div className="App-Login-Container">
             <p>ログインできています</p>
             <button type="button" onClick={signOut}>signOut</button>
-            <button type="button" onClick={dataW}>書き込み</button>
+            <button type="button" onClick={dataWriting}>writing</button>
             <ul>{todos.map((keyName: any, i: number) => (
                 <li className="travelcompany-input" key={i}>
                     <span className="input-label">key: {i} Value: {keyName.value}</span>
