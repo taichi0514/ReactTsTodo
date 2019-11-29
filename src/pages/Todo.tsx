@@ -14,7 +14,6 @@ const Todo: React.FC<{}> = () => {
     React.useEffect(() => {
         firebase.auth().onAuthStateChanged(async (user) => {
             const dateNow = moment().format()
-            console.log(dateNow)
             if (user) {
                 await setUid(user.uid)
                 Cookies.set("isLoggin", "true");
