@@ -77,7 +77,7 @@ const Todo: React.FC<{}> = (props) => {
         <div className="App-Login-Container">
             <p>ログインできています</p>
             <button type="button" onClick={signOut}>signOut</button>
-            <input type="text" placeholder="post" value={writingTodo} onChange={setNewTodo} />
+            <input type="text" placeholder="post" value={writingTodo || ''} onChange={setNewTodo} />
             <button type="button" onClick={dataWriting}>post</button>
             <ul>{todos.map((keyName: any, i: number) => (
                 <li className="travelcompany-input" key={i}>
