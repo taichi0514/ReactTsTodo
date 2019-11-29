@@ -48,7 +48,7 @@ const Todo: React.FC<{}> = () => {
         return result
     })
 
-    const dataWriting = () => {
+    const dataWriting = async () => {
         // Add a new document in collection "cities"
         const dateNow = moment().format('YYYY/MM/DD HH:mm:ss')
         const uidValue = Cookies.get("uid");
@@ -56,7 +56,10 @@ const Todo: React.FC<{}> = () => {
             value: writingTodo,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             date: dateNow,
-        })
+        }).then(() => {
+            setWritingTodo("");
+        });
+
     }
 
     const signOut = () => {
