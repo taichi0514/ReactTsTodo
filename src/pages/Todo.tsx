@@ -37,17 +37,7 @@ const Todo: React.FC<{}> = (props) => {
                     // const product: Product = JSON.parse(data) as Product;
                     const str = JSON.stringify(data);
                     const myobj = JSON.parse(str);
-                    const myarray = Object.entries(str)
-                    let allNames = myobj.map((todo: any) => {
-                        return (todo.value)
-                    });
-                    console.log("myobj.value =======" + myobj.value)
-                    console.log("myobj[0].value =======" + myobj[0].value)
-                    console.log("contentKeys =======" + allNames)
-                    console.log("iterator =======" + allNames[Symbol.iterator]())
                     setTodo(myobj)
-                    console.log(typeof myarray)
-                    console.log(typeof todos)
                 })
             })
             .catch((err) => {
@@ -63,14 +53,8 @@ const Todo: React.FC<{}> = (props) => {
         db.collection("users").doc(uidValue).collection("todo").add({
             value: writingTodo,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            date: dateNow
+            date: dateNow,
         })
-            .then(function () {
-                console.log("Document written with ID: ");
-            })
-            .catch(function () {
-                console.error("Error writing document: ");
-            });
     }
 
     const signOut = () => {
@@ -82,6 +66,10 @@ const Todo: React.FC<{}> = (props) => {
     const setNewTodo = (event: any) => {
         setWritingTodo(event.target.value);
     }
+
+    // const todoRemove = (event: any) => {
+    //     rmPassword(event.target.value);
+    // };
 
 
 
