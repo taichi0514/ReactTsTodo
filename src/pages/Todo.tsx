@@ -35,7 +35,6 @@ const Todo: React.FC<{}> = () => {
                 citiesRef.orderBy("date", "asc").onSnapshot(query => {
                     let data = [{}]
                     query.forEach(d => data.push({ ...d.data(), docId: d.id }))
-                    // const product: Product = JSON.parse(data) as Product;
                     const str = JSON.stringify(data);
                     const myobj = JSON.parse(str);
                     setTodo(myobj)
@@ -48,7 +47,6 @@ const Todo: React.FC<{}> = () => {
     })
 
     const dataWriting = async () => {
-        // Add a new document in collection "cities"
         const dateNow = moment().format('YYYY/MM/DD HH:mm:ss')
         const uidValue = Cookies.get("uid");
         db.collection("users").doc(uidValue).collection("todo").add({
@@ -70,10 +68,6 @@ const Todo: React.FC<{}> = () => {
     const setNewTodo = (event: any) => {
         setWritingTodo(event.target.value);
     }
-
-    // const todoRemove = (event: any) => {
-    //     rmPassword(event.target.value);
-    // };
 
     const todoDelete = (event: any) => {
         const target = event.target.value;
