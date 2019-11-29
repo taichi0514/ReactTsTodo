@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import firebase from '../plugins/firebase';
 import moment from "moment";
 
-const Todo: React.FC<{}> = (props) => {
+const Todo: React.FC<{}> = () => {
     const db = firebase.firestore();
     const history = useHistory();
     const [writingTodo, setWritingTodo] = React.useState();
@@ -73,7 +73,17 @@ const Todo: React.FC<{}> = (props) => {
     //     rmPassword(event.target.value);
     // };
 
-
+    const todoDelete = (event: any) => {
+        const target = event.target.parentNode;
+        const uidValue = Cookies.get("uid");
+        target.addEventListener('click', () => {
+            const docId = target.lastElementChild.textContent
+            const citiesRef = db.collection("users").doc(uidValue).collection("todo").doc(docId);
+            citiesRef.delete().then(function () {
+                console.log("Document successfully deleted!");
+            });
+        });
+    }
 
     return (
         <div className="App-Login-Container">
@@ -82,13 +92,17 @@ const Todo: React.FC<{}> = (props) => {
             <input type="text" placeholder="post" value={writingTodo || ''} onChange={setNewTodo} />
             <button type="button" onClick={dataWriting}>post</button>
             <ul>{todos.map((keyName: any, i: number) => (
-                <li className="travelcompany-input" key={i}>
+                <li className="todoList" key={i} onClick={todoDelete}>
                     <span className="input-label">Time: {keyName.date} Value: {keyName.value}</span>
+                    <span className="dateHideen">{keyName.docId}</span>
                 </li>
             ))}</ul>
         </div>
     );
+}
 
-};
+
+
+
 
 export default Todo

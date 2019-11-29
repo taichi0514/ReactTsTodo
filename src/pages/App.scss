@@ -28,3 +28,18 @@
   width: 100%;
   margin: 40px auto 0;
 }
+
+.dateHideen{
+  display: none;
+}
+
+.todoList{
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.todoList .input-label,.todoList .dateHideen{
+  user-select: none;
+}
