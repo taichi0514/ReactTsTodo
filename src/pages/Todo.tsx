@@ -74,15 +74,11 @@ const Todo: React.FC<{}> = () => {
     // };
 
     const todoDelete = (event: any) => {
-        const target = event.target.parentNode;
+        const target = event.target.value;
         const uidValue = Cookies.get("uid");
-        target.addEventListener('click', () => {
-            const docId = target.lastElementChild.textContent
-            const citiesRef = db.collection("users").doc(uidValue).collection("todo").doc(docId);
-            citiesRef.delete().then(function () {
-                console.log("Document successfully deleted!");
-            });
-        });
+        const docId = target
+        const citiesRef = db.collection("users").doc(uidValue).collection("todo").doc(docId);
+        citiesRef.delete()
     }
 
     return (
@@ -91,10 +87,10 @@ const Todo: React.FC<{}> = () => {
             <button type="button" onClick={signOut}>signOut</button>
             <input type="text" placeholder="post" value={writingTodo || ''} onChange={setNewTodo} />
             <button type="button" onClick={dataWriting}>post</button>
-            <ul>{todos.map((keyName: any, i: number) => (
-                <li className="todoList" key={i} onClick={todoDelete}>
+            <ul className="todoList">{todos.map((keyName: any, i: number) => (
+                <li className="todoListItem" key={i}>
+                    <input type="checkbox" value={keyName.docId} onChange={todoDelete} />
                     <span className="input-label">Time: {keyName.date} Value: {keyName.value}</span>
-                    <span className="dateHideen">{keyName.docId}</span>
                 </li>
             ))}</ul>
         </div>
