@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.scss';
+import '../scss/materialize.scss'
 import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 import firebase from '../plugins/firebase';
@@ -80,13 +81,15 @@ const Todo: React.FC<{}> = () => {
     return (
         <div className="App-Login-Container">
             <p>ログインできています</p>
-            <button type="button" onClick={signOut}>signOut</button>
+            <button className="waves-effect waves-light btn" type="button" onClick={signOut}>signOut</button>
             <input type="text" placeholder="post" value={writingTodo || ''} onChange={setNewTodo} />
-            <button type="button" onClick={dataWriting}>post</button>
+            <button className="waves-effect waves-light btn" type="button" onClick={dataWriting}>post</button>
             <ul className="todoList">{todos.map((keyName: any, i: number) => (
                 <li className="todoListItem" key={i}>
-                    <input type="checkbox" value={keyName.docId} onChange={todoDelete} />
-                    <span className="input-label">Time: {keyName.date} Value: {keyName.value}</span>
+                    <label>
+                        <input type="checkbox" value={keyName.docId} onChange={todoDelete} />
+                        <span className="input-label">Time: {keyName.date} Value: {keyName.value}</span>
+                    </label>
                 </li>
             ))}</ul>
         </div>
