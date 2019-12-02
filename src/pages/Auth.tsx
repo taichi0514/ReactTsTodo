@@ -68,10 +68,11 @@ const Auth: React.FC<{}> = () => {
                 value={password}
                 onChange={passwordSet}
             />
-            <button type="button" onClick={login}>
+
+            <button className="waves-effect waves-light btn" type="button" onClick={login}>
                 Login
       </button>
-            <button type="button" onClick={signOut}>
+            <button className="waves-effect waves-light btn" type="button" onClick={signOut}>
                 Logout
       </button>
         </div>
