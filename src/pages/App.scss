@@ -44,6 +44,10 @@
   margin: 10px;
 }
 
+.todoListItem:first-child{
+  display: none;
+}
+
 .todoList .input-label,.todoList .dateHideen{
   user-select: none;
 }
