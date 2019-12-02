@@ -13,7 +13,6 @@ const Auth: React.FC<{}> = () => {
 
     const history = useHistory();
     React.useEffect(() => {
-
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 Cookies.set("isLoggin", "true");
@@ -52,6 +51,17 @@ const Auth: React.FC<{}> = () => {
         setPassword(event.target.value);
     };
 
+    const signUp = () => {
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(user => {
+            setIsAuthenticated("true")
+            history.push('/todo')
+        }, error => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorCode + ":" + errorMessage);
+        });
+    };
+
     return (
         <div className="App-Login-Container">
             <input
@@ -69,6 +79,9 @@ const Auth: React.FC<{}> = () => {
                 onChange={passwordSet}
             />
 
+            <button className="waves-effect waves-light btn" type="button" onClick={signUp}>
+                signUp
+      </button>
             <button className="waves-effect waves-light btn" type="button" onClick={login}>
                 Login
       </button>
