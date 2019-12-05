@@ -6,15 +6,40 @@ import Cookies from 'js-cookie';
 import firebase from '../plugins/firebase';
 import moment from "moment";
 
-const Todo: React.FC<{}> = () => {
+
+
+const Todo: React.FC<{}> = (Props: any) => {
     const db = firebase.firestore();
     const history = useHistory();
     const [writingTodo, setWritingTodo] = React.useState();
     const [todos, setTodo] = React.useState([]);
     const [uid, setUid] = React.useState();
+    const [auth, dispatch] = React.useReducer((state, action) => {
+        switch (action.type) {
+            case 'AUTH_TRUE':
+                // ↑ SET_COUNT以外でpayloadを参照するとエラーになる
+                return [...state, { AuthState: true }];
+
+            case 'AUTH_FALSE':
+                // ↑ OK
+                return [...state, { AuthState: false }];
+
+            default:
+                return state;
+            // ↑ ケースの定義もれがあった場合にエラーになる
+        }
+    }, []);
+
+    const reducer = (() => {
+        dispatch({
+            type: 'AUTH_TRUE'
+        });
+    })
+
+
     React.useEffect(() => {
         firebase.auth().onAuthStateChanged(async (user) => {
-            const dateNow = moment().format()
+            reducer()
             if (user) {
                 await setUid(user.uid)
                 Cookies.set("isLoggin", "true");
@@ -98,6 +123,4 @@ const Todo: React.FC<{}> = () => {
 
 
 
-
-
-export default Todo
+export default Todo;
